@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Práctica de Colas - Edición Nicaragua (JavaScript & Python)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Encabezado con las tres franjas de la bandera de Nicaragua -->
+    <header class="flag-banner">
+      <div class="flag-stripe-blue"></div>
+      <div class="flag-stripe-white">
+        <div class="title-area">
+          <div class="coat-of-arms" title="Escudo de Nicaragua">🌋</div>
+          <div>
+            <h1>Práctica de Colas (Queue) • Edición Nicaragua 🇳🇮</h1>
+            <p>Simulador Visual con Valores Dinámicos • Lógica en <strong>JavaScript</strong> y <strong>Python</strong> en O(1)</p>
+          </div>
+        </div>
+      </div>
+      <div class="flag-stripe-blue"></div>
+    </header>
+
+    <!-- Selector Principal de Opción / Ejercicio -->
+    <div class="selector-bar">
+      <div class="selector-group">
+        <label for="main-exercise-select">📌 Selecciona la opción que deseas ejecutar:</label>
+        <select id="main-exercise-select" class="nica-select" onchange="switchTab(parseInt(this.value, 10))">
+          <option value="1">Opción 1: Ejercicio 1 — Implementar la Cola (enqueue, dequeue, peek, size)</option>
+          <option value="2">Opción 2: Ejercicio 2 — Invertir una Cola con Pila Auxiliar</option>
+          <option value="3">Opción 3: Ejercicio 3 — Simulación de Banco (Espera Promedio)</option>
+          <option value="4">Opción 4: Ejercicio 4 — Generar Números Binarios con una Cola</option>
+          <option value="5">Opción 5: Ejercicio 5 — Juego de la Papa Caliente</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Botones de pestañas rápidas -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(1)">1. Cola Base O(1)</button>
+      <button class="tab-btn" onclick="switchTab(2)">2. Invertir Cola</button>
+      <button class="tab-btn" onclick="switchTab(3)">3. Banco</button>
+      <button class="tab-btn" onclick="switchTab(4)">4. Binarios</button>
+      <button class="tab-btn" onclick="switchTab(5)">5. Papa Caliente</button>
+    </div>
+
+    <!-- ==========================================
+         PANEL 1: IMPLEMENTA LA COLA
+    =========================================== -->
+    <div id="panel-1" class="exercise-panel active">
+      <div class="panel-header">
+        <h2>Ejercicio 1: Implementa la cola (Lista Enlazada O(1))</h2>
+        <p>Elige la operación que deseas realizar e introduce el valor dinámico.</p>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label for="ex1-op">Tipo de operación</label>
+          <select id="ex1-op" class="op-select" onchange="toggleEx1Input()">
+            <option value="enqueue">enqueue(valor) — Agregar al final</option>
+            <option value="dequeue">dequeue() — Sacar del frente</option>
+            <option value="peek">peek() — Ver el frente</option>
+            <option value="isEmpty">isEmpty() — ¿Está vacía?</option>
+            <option value="size">size() — Ver tamaño</option>
+          </select>
+        </div>
+
+        <div class="input-group" id="ex1-input-wrap">
+          <label for="ex1-input">Valor a ingresar</label>
+          <input type="text" id="ex1-input" value="A" placeholder="Ej. A, B, Managua..." />
+        </div>
+
+        <button class="action-btn" onclick="ex1ExecuteSelected()">Ejecutar Operación</button>
+        <button class="action-btn gold" onclick="ex1RunDemo()">Simular Ejemplo del PDF</button>
+        <button class="action-btn danger" onclick="ex1Clear()">Vaciar Cola</button>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-card"><span>peek() (Frente)</span><strong id="ex1-peek">undefined</strong></div>
+        <div class="stat-card"><span>size() (Tamaño)</span><strong id="ex1-size">0</strong></div>
+        <div class="stat-card"><span>isEmpty()</span><strong id="ex1-empty">true</strong></div>
+        <div class="stat-card"><span>Último dequeue()</span><strong id="ex1-last-deq">-</strong></div>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Lista Enlazada en Memoria (Frente → Final)</div>
+        <div id="ex1-nodes" class="nodes-row"></div>
+      </div>
+
+      <div id="ex1-log" class="log-box"></div>
+    </div>
+
+    <!-- ==========================================
+         PANEL 2: INVERTIR UNA COLA
+    =========================================== -->
+    <div id="panel-2" class="exercise-panel">
+      <div class="panel-header">
+        <h2>Ejercicio 2: Invertir una cola</h2>
+        <p>Ingresa tus propios valores o agrega uno por uno y observa cómo se invierte usando una Pila auxiliar.</p>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label>Valores separados por coma</label>
+          <input type="text" id="ex2-input" value="1, 2, 3, 4" style="min-width: 220px;" />
+        </div>
+        <button class="action-btn secondary" onclick="ex2Load()">Cargar Lista</button>
+
+        <div class="input-group">
+          <label>Agregar un valor extra</label>
+          <input type="text" id="ex2-single" placeholder="Ej. 5" style="width: 110px;" />
+        </div>
+        <button class="action-btn secondary" onclick="ex2AddSingle()">+ Encolar</button>
+
+        <button class="action-btn gold" onclick="ex2AnimateInvert()">🔄 Simular Inversión Paso a Paso</button>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Cola q (Frente → Final)</div>
+        <div id="ex2-queue-nodes" class="nodes-row"></div>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Pila Auxiliar (push / pop)</div>
+        <div id="ex2-stack-nodes" class="nodes-row"></div>
+      </div>
+
+      <div id="ex2-log" class="log-box"></div>
+    </div>
+
+    <!-- ==========================================
+         PANEL 3: SIMULACIÓN DE BANCO
+    =========================================== -->
+    <div id="panel-3" class="exercise-panel">
+      <div class="panel-header">
+        <h2>Ejercicio 3: Simulación de banco</h2>
+        <p>Ingresa las duraciones en minutos de cada cliente o selecciona un caso de prueba para calcular la espera promedio.</p>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label>Seleccionar caso o personalizar</label>
+          <select id="ex3-preset" class="op-select" onchange="ex3ApplyPreset()">
+            <option value="5, 3, 8">Ejemplo 1 del PDF: 5, 3, 8 (Promedio 4.33)</option>
+            <option value="4, 4, 4, 4">Ejemplo 2 del PDF: 4, 4, 4, 4 (Promedio 6.00)</option>
+            <option value="custom">Personalizado (Escribir abajo)</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Duraciones de clientes (min)</label>
+          <input type="text" id="ex3-input" value="5, 3, 8" style="min-width: 200px;" />
+        </div>
+
+        <button class="action-btn gold" onclick="ex3Simulate()">🏦 Simular Atención en Caja</button>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-card"><span>Reloj del Banco</span><strong id="ex3-clock">0 min</strong></div>
+        <div class="stat-card"><span>Esperas de cada cliente</span><strong id="ex3-waits">-</strong></div>
+        <div class="stat-card"><span>Espera Promedio</span><strong id="ex3-avg">0.00 min</strong></div>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Clientes formados en la Cola del Banco (Frente → Final)</div>
+        <div id="ex3-nodes" class="nodes-row"></div>
+      </div>
+
+      <div id="ex3-log" class="log-box"></div>
+    </div>
+
+    <!-- ==========================================
+         PANEL 4: NÚMEROS BINARIOS
+    =========================================== -->
+    <div id="panel-4" class="exercise-panel">
+      <div class="panel-header">
+        <h2>Ejercicio 4: Números binarios con una cola</h2>
+        <p>Indica cuántos números binarios positivos (<code>n</code>) quieres generar usando únicamente una cola.</p>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label>Cantidad n de binarios</label>
+          <input type="number" id="ex4-input" value="5" min="1" max="32" style="width: 120px;" />
+        </div>
+        <button class="action-btn gold" onclick="ex4Simulate()">⚡ Generar Binarios Paso a Paso</button>
+        <button class="action-btn secondary" onclick="document.getElementById('ex4-input').value='10'; ex4Simulate();">Probar con n = 10</button>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Cola de Generación Activa (Queue)</div>
+        <div id="ex4-queue" class="nodes-row"></div>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Números Binarios Generados en Orden</div>
+        <div id="ex4-result" class="nodes-row"></div>
+      </div>
+
+      <div id="ex4-log" class="log-box"></div>
+    </div>
+
+    <!-- ==========================================
+         PANEL 5: PAPA CALIENTE
+    =========================================== -->
+    <div id="panel-5" class="exercise-panel">
+      <div class="panel-header">
+        <h2>Ejercicio 5: Papa caliente</h2>
+        <p>Escribe los nombres de los participantes y el número de pases <code>n</code> por ronda.</p>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label>Cargar ejemplo o escribir</label>
+          <select id="ex5-preset" class="op-select" onchange="ex5ApplyPreset()">
+            <option value="0">Ejemplo 1: Ana, Luis, Marta, Pedro, Sofia (n=3)</option>
+            <option value="1">Ejemplo 2: A, B, C, D (n=1)</option>
+            <option value="2">Ejemplo 3: A, B, C, D, E, F, G (n=2)</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Nombres (separados por coma)</label>
+          <input type="text" id="ex5-names" value="Ana, Luis, Marta, Pedro, Sofia" style="min-width: 250px;" />
+        </div>
+
+        <div class="input-group">
+          <label>Pases (n)</label>
+          <input type="number" id="ex5-n" value="3" min="0" max="30" style="width: 90px;" />
+        </div>
+
+        <button class="action-btn gold" onclick="ex5Simulate()">🥔 Iniciar Juego</button>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-card"><span>Tiene la papa (Frente)</span><strong id="ex5-holder">-</strong></div>
+        <div class="stat-card"><span>Jugadores activos</span><strong id="ex5-count">0</strong></div>
+        <div class="stat-card"><span>Ganador(a)</span><strong id="ex5-winner">En espera...</strong></div>
+      </div>
+
+      <div class="viz-box">
+        <div class="viz-title">Círculo Simulado con una Cola (El frente tiene la papa 🥔)</div>
+        <div id="ex5-nodes" class="nodes-row"></div>
+      </div>
+
+      <div id="ex5-log" class="log-box"></div>
+    </div>
+
+    <!-- ==========================================
+         VISOR DE CÓDIGO EN JAVASCRIPT Y PYTHON
+    =========================================== -->
+    <div class="code-viewer-card">
+      <div class="code-header">
+        <strong>💻 Código Fuente de la Lógica (Selecciona JavaScript o Python)</strong>
+        <div class="code-tabs">
+          <button id="btn-js" class="lang-btn active" onclick="showLangCode('js')">🟨 JavaScript (cola.js)</button>
+          <button id="btn-py" class="lang-btn" onclick="showLangCode('python')">🐍 Python (cola.py)</button>
+        </div>
+      </div>
+      <pre id="code-display" class="code-block"></pre>
+    </div>
+  </div>
+
+  <!-- Archivo JavaScript separado -->
+  <script src="cola.js"></script>
+</body>
+</html>
